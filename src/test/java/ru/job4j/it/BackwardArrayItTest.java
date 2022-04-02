@@ -15,7 +15,6 @@ public class BackwardArrayItTest {
                 new int[]{1, 2, 3}
         );
         assertThat(it.hasNext(), is(true));
-        it.next();
         assertThat(it.hasNext(), is(true));
     }
 
