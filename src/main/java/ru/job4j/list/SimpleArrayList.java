@@ -1,9 +1,6 @@
 package ru.job4j.list;
 
-import java.util.Arrays;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class SimpleArrayList<T> implements List<T> {
 
@@ -14,23 +11,23 @@ public class SimpleArrayList<T> implements List<T> {
     private int modCount;
 
     public SimpleArrayList() {
-        this.container = (T[]) new Object[10];
+        this.container = (T[]) new Object[8];
     }
 
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
     }
 
-    private T[] grow() {
-        int capacity = (container.length == 0 ? 10 : size) * 2;
-        return Arrays.copyOf(container, capacity);
+    private void grow() {
+        int capacity = (container.length == 0 ? 8 : size) * 2;
+        container = Arrays.copyOf(container, capacity);
     }
 
 
     @Override
     public void add(T value) {
         if (size == container.length) {
-            container = grow();
+            grow();
         }
         container[size++] = value;
         modCount++;
@@ -48,7 +45,7 @@ public class SimpleArrayList<T> implements List<T> {
         T rsl = get(index);
         System.arraycopy(container, index + 1,
                 container, index,
-                container.length - (index + 1));
+                container.length - index - 1);
         container[--size] = null;
         modCount++;
         return rsl;
@@ -56,6 +53,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
+        Objects.checkIndex(index, size);
         return container[index];
     }
 
