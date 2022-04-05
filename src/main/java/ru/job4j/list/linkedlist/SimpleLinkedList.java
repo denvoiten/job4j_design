@@ -34,8 +34,8 @@ public class SimpleLinkedList<E> implements List<E> {
             last = new Node(secondLast, value, null);
             secondLast.next = last;
         }
-        size++;
         modCount++;
+        size++;
     }
 
     @Override
