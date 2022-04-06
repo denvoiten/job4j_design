@@ -12,27 +12,20 @@ public class SimpleQueue<T> {
         if (xIn == 0 && xOut == 0) {
             throw new NoSuchElementException();
         }
-        if (xIn > 0) {
-            xOut = swap(out, in, xIn);
-            xIn = 0;
+        if (xOut == 0) {
+            while (xIn != 0) {
+                out.push(in.pop());
+                xIn--;
+                xOut++;
+            }
         }
         xOut--;
         return out.pop();
     }
 
     public void push(T value) {
-        if (xOut > 0) {
-            xIn = swap(in, out, xOut);
-            xOut = 0;
-        }
         in.push(value);
         xIn++;
     }
-
-    public int swap(SimpleStack<T> first, SimpleStack<T> second, int count) {
-        for (int i = 0; i < count; i++) {
-            first.push(second.pop());
-        }
-        return count;
-    }
 }
+
