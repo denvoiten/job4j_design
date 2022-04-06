@@ -11,7 +11,8 @@ public class SimpleQueue<T> {
     public T poll() {
         if (xIn == 0 && xOut == 0) {
             throw new NoSuchElementException();
-        } else {
+        }
+        if (xIn > 0) {
             xOut = swap(out, in, xIn);
             xIn = 0;
         }
