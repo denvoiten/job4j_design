@@ -54,27 +54,23 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(K key) {
-        V rsl;
+        V rsl = null;
         int index = indexFor(hash(key.hashCode()));
         if (table[index] != null && table[index].key.equals(key)) {
             rsl = table[index].value;
-        } else {
-            rsl = null;
         }
         return rsl;
     }
 
     @Override
     public boolean remove(K key) {
-        boolean rsl;
+        boolean rsl = false;
         int index = indexFor(hash(key.hashCode()));
         if (table[index] != null && table[index].key.equals(key)) {
             table[index] = null;
             rsl = true;
             size--;
             modCount++;
-        } else {
-            rsl = false;
         }
         return rsl;
     }
