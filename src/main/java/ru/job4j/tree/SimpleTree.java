@@ -1,6 +1,8 @@
 package ru.job4j.tree;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Optional;
+import java.util.Queue;
 
 public class SimpleTree<E> implements Tree<E> {
     private final Node<E> root;
@@ -11,14 +13,14 @@ public class SimpleTree<E> implements Tree<E> {
 
     @Override
     public boolean add(E parent, E child) {
-        boolean rsl = false;
-      Optional<Node<E>> father = findBy(parent);
-      Optional<Node<E>> kid = findBy(child);
-      if (father.isPresent() && kid.isEmpty()) {
-          Node<E> newChild = new Node<>(child);
-          father.get().children.add(newChild);
-          rsl = true;
-      }
+
+        Optional<Node<E>> father = findBy(parent);
+        Optional<Node<E>> kid = findBy(child);
+        boolean rsl = father.isPresent() && kid.isEmpty();
+        if (rsl) {
+            Node<E> newChild = new Node<>(child);
+            father.get().children.add(newChild);
+        }
         return rsl;
     }
 
