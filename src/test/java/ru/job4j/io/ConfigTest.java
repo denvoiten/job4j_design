@@ -1,13 +1,9 @@
 package ru.job4j.io;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.util.NoSuchElementException;
-
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class ConfigTest {
 
@@ -16,8 +12,8 @@ public class ConfigTest {
         String path = "./data/pair_without_comment.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("name"),is("Denis"));
-        assertThat(config.value("surname"),is("Voitenko"));
+        assertThat(config.value("name"), is("Denis"));
+        assertThat(config.value("surname"), is("Voitenko"));
     }
 
     @Test
@@ -25,8 +21,8 @@ public class ConfigTest {
         String path = "./data/pair_with_comments.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("name"),is("Bruce"));
-        assertThat(config.value("surname"),is("Wayne"));
+        assertThat(config.value("name"), is("Bruce"));
+        assertThat(config.value("surname"), is("Wayne"));
     }
 
     @Test(expected = IllegalArgumentException.class)
