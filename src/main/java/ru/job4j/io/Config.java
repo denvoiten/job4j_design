@@ -18,7 +18,7 @@ public class Config {
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(this.path))) {
             in.lines()
-                    .filter(str -> !str.contains("#"))
+                    .filter(str -> !str.startsWith("#"))
                     .filter(str -> !str.equals(""))
                     .filter(this::check)
                     .map(str -> str.split("=", 2))
