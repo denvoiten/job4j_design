@@ -39,10 +39,12 @@ public class ConfigTest {
         config.load();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenPairWithNameTwice() {
         String path = "./data/pair_with_name_twice.properties";
         Config config = new Config(path);
         config.load();
+        assertThat(config.value("name"), is("Jackie=Chan"));
+        assertThat(config.value("surname"), is("Shilun"));
     }
 }

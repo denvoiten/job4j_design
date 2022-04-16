@@ -17,18 +17,23 @@ public class Config {
 
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(this.path))) {
-            in.lines().forEach(str -> {
-                if (str.contains("=") && !str.startsWith("#")) {
-                    String[] strSplit = str.split("=");
-                    if (strSplit[0].isEmpty() || strSplit.length != 2) {
-                        throw new IllegalArgumentException();
-                    }
-                    values.put(strSplit[0], strSplit[1]);
-                }
-            });
+            in.lines()
+                    .filter(str -> !str.equals(""))
+                    .filter(str -> !str.contains("#"))
+                    .filter(this::check)
+                    .map(str -> str.split("=", 2))
+                    .forEach(str -> values.put(str[0], str[1]));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean check(String str) {
+        String[] strSplit = str.split("=", 2);
+        if (strSplit[0].isEmpty() || strSplit[1].isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return true;
     }
 
     public String value(String key) {
@@ -47,6 +52,6 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Config("app.properties"));
+        System.out.println(new Config("./data/app.properties"));
     }
 }
