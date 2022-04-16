@@ -18,8 +18,8 @@ public class Config {
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(this.path))) {
             in.lines()
-                    .filter(str -> !str.equals(""))
                     .filter(str -> !str.contains("#"))
+                    .filter(str -> !str.equals(""))
                     .filter(this::check)
                     .map(str -> str.split("=", 2))
                     .forEach(str -> values.put(str[0], str[1]));
@@ -31,7 +31,7 @@ public class Config {
     private boolean check(String str) {
         String[] strSplit = str.split("=", 2);
         if (strSplit[0].isEmpty() || strSplit[1].isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Pattern violation");
         }
         return true;
     }
