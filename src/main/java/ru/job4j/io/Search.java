@@ -9,13 +9,19 @@ import java.util.function.Predicate;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get("./src/test/java/ru/job4j/tree");
-        search(start, p -> p.toFile().getName().endsWith(".java")).forEach(System.out::println);
+        search(validate(args), p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
         return searcher.getRsl();
+    }
+
+    public static Path validate(String[] args) throws IOException {
+        if (args.length == 0 || args.length == 1) {
+            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+        }
+        return Paths.get(args[0]);
     }
 }
