@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,7 +20,7 @@ public class Search {
     }
 
     public static Path validate(String[] args) throws IOException {
-        if (args.length < 2) {
+        if (args.length < 2 || !Files.isDirectory(Paths.get(args[0]))) {
             throw new IllegalArgumentException("Enter root folder and file extension to search.");
         }
         return Paths.get(args[0]);
