@@ -20,7 +20,7 @@ public class Search {
 
     public static Path validate(String[] args) throws IOException {
         if (args.length < 2) {
-            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+            throw new IllegalArgumentException("Required parameters not specified.");
         }
         return Paths.get(args[0]);
     }
