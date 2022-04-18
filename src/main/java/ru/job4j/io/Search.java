@@ -20,7 +20,7 @@ public class Search {
 
     public static Path validate(String[] args) throws IOException {
         if (args.length < 2) {
-            throw new IllegalArgumentException("Required parameters not specified.");
+            throw new IllegalArgumentException("Enter root folder and file extension to search.");
         }
         return Paths.get(args[0]);
     }
