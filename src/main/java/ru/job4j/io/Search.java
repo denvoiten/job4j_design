@@ -19,7 +19,7 @@ public class Search {
     }
 
     public static Path validate(String[] args) throws IOException {
-        if (args.length == 0 || args.length == 1) {
+        if (args.length < 2) {
             throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
         }
         return Paths.get(args[0]);
