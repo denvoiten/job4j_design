@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ArgsName {
-    String massage = "Parameters must be passed in the format \"-key=value\".";
+    String message = "Parameters must be passed in the format \"-key=value\".";
     private final Map<String, String> values = new HashMap<>();
 
     public String get(String key) {
@@ -16,7 +16,7 @@ public class ArgsName {
 
     private void parse(String[] args) {
         if (args.length == 0) {
-            throw new IllegalArgumentException("Parameters not specified. " + massage);
+            throw new IllegalArgumentException("Parameters not specified. " + message);
         }
         for (String str : args) {
             String[] valid = validate(str);
@@ -26,11 +26,11 @@ public class ArgsName {
 
     private String[] validate(String str) {
         if (!str.startsWith("-") || !str.contains("=")) {
-            throw new IllegalArgumentException(massage);
+            throw new IllegalArgumentException(message);
         }
         String[] strSplit = str.replaceFirst("-", "").split("=", 2);
         if (strSplit[0].isEmpty() || strSplit[1].isEmpty()) {
-            throw new IllegalArgumentException(massage);
+            throw new IllegalArgumentException(message);
         }
         return strSplit;
     }

@@ -1,14 +1,15 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
+    static String message = "Example: -d=c:\\project\\job4j\\ -e=.class -o=project.zip";
 
     public static void packFiles(List<File> sources, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
@@ -23,47 +24,26 @@ public class Zip {
         }
     }
 
-    private static void validate(ArgsName argsName) {
-        try {
-            argsName.get("d");
-            argsName.get("e");
-            argsName.get("o");
-        } catch (IllegalArgumentException e) {
-            if (e.getMessage().equals("The key \"d\" does not exist.")) {
-                throw new IllegalArgumentException("Directory not specified.");
-            } else if (e.getMessage().equals("The key \"e\" does not exist.")) {
-                throw new IllegalArgumentException("Extension not specified.");
-            } else if (e.getMessage().equals("The key \"o\" does not exist.")) {
-                throw new IllegalArgumentException("Output not specified");
-            }
+    private static String[] validate(String[] args) {
+        ArgsName names = ArgsName.of(args);
+        if (args.length != 3) {
+            throw new IllegalArgumentException("Not all parameters entered. " + message);
+        } else if (!Files.isDirectory(Path.of(names.get("d")))) {
+            throw new IllegalArgumentException("Directory \"" + names.get("d") + "\" doesn't exist");
         }
-        if (!Paths.get(argsName.get("d")).toFile().isDirectory()) {
-            throw new IllegalArgumentException("Directory \"" + argsName.get("d") + "\" doesn't exist");
-        }
+        return new String[]{names.get("d"), names.get("e"), names.get("o")};
     }
 
     private static List<File> getListFiles(String path, String extension) throws IOException {
-        return Search.search(Paths.get(path), p -> !p.toFile().getName().endsWith(extension))
+        return Search.search(Path.of(path), p -> !p.toFile().getName().endsWith(extension))
                 .stream()
                 .map(Path::toFile)
                 .collect(Collectors.toList());
     }
 
-    public void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(out.readAllBytes());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void main(String[] args) throws IOException {
-        ArgsName argsName = ArgsName.of(args);
-        validate(argsName);
-        List<File> files = getListFiles(argsName.get("d"), argsName.get("e").replaceFirst("-", ""));
-        packFiles(files, Paths.get(argsName.get("o")).toFile());
+        String[] arrArgs = validate(args);
+        List<File> files = getListFiles(String.valueOf(Path.of(arrArgs[0])), arrArgs[1]);
+        packFiles(files, Path.of(arrArgs[2]).toFile());
     }
 }
