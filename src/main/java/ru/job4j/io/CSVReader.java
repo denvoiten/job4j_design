@@ -20,7 +20,7 @@ public class CSVReader {
 
     private static void dataOutput(String out, String delimiter, Path path, List<String> filters) throws IOException {
         String rsl = takeData(delimiter, path, getIndexes(path, filters, delimiter));
-        if (out.equals("stdout")) {
+        if ("stdout".equals(out)) {
             System.out.println(rsl);
         } else {
             try (FileOutputStream dataOut = new FileOutputStream(out)) {
