@@ -3,6 +3,7 @@ package ru.job4j.io;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +11,10 @@ import java.util.Scanner;
 
 public class CSVReader {
     public static void handle(ArgsName argsName) throws IOException {
-        validate(argsName);
         String out = argsName.get("out");
         String delimiter = argsName.get("delimiter");
         Path path = Path.of(argsName.get("path"));
+        validate(argsName, delimiter, out, path);
         List<String> filters = List.of(argsName.get("filter").split(","));
         dataOutput(out, delimiter, path, filters);
     }
@@ -61,15 +62,18 @@ public class CSVReader {
         return indexes;
     }
 
-    private static void validate(ArgsName argsName) {
-        if (argsName.get("path") == null) {
-            throw new IllegalArgumentException("File source is not specified.");
-        } else if (argsName.get("delimiter") == null) {
-            throw new IllegalArgumentException("Delimiter is not specified.");
-        } else if (argsName.get("out") == null) {
-            throw new IllegalArgumentException("File for recording the result is not specified.");
-        } else if (argsName.get("filter") == null) {
-            throw new IllegalArgumentException("No filters specified.");
+    private static void validate(ArgsName argsName, String delimiter, String out, Path path) {
+        if (!(";".equals(delimiter) || ",".equals(delimiter))) {
+            throw new IllegalArgumentException("Param -delimiter is not correct. Usage -delimiter=\";\" or \",\"");
+        }
+        if (!("stdout".equals(out))) {
+            throw new IllegalArgumentException(
+                    "Param -out is not correct. "
+                            + "Usage -out=stdout for output to the console, "
+                            + "or -out=File.CSV for output to file");
+        }
+        if (!Files.isRegularFile(Path.of(argsName.get("path")))) {
+            throw new IllegalArgumentException(String.format("%s is not directory. Enter root folder", path));
         }
     }
 
