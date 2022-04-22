@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -66,7 +67,7 @@ public class CSVReader {
         if (!(";".equals(delimiter) || ",".equals(delimiter))) {
             throw new IllegalArgumentException("Param -delimiter is not correct. Usage -delimiter=\";\" or \",\"");
         }
-        if (!("stdout".equals(out))) {
+        if ((!("stdout".equals(out)) && !new File(out).isFile())) {
             throw new IllegalArgumentException(
                     "Param -out is not correct. "
                             + "Usage -out=stdout for output to the console, "
