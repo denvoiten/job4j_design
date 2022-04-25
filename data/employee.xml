@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<employee name="Denis" aviailable="true" yearsOfExperience="2">
+    <boss phoneNumber="999-999" name="Bob"/>
+    <infos>
+        <info>male</info>
+        <info>developer</info>
+    </infos>
+</employee>
