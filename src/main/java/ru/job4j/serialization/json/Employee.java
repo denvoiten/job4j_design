@@ -60,8 +60,10 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{"
-                + "name='" + name + '\'' + ", available="
-                + available + ", yearsOfExperience=" + yearsOfExperience
-                + ", info=" + Arrays.toString(info) + '}';
+                + "name='" + name + '\''
+                + ", available=" + available
+                + ", yearsOfExperience=" + yearsOfExperience
+                + ", boss=" + boss + ", info="
+                + Arrays.toString(info) + '}';
     }
 }
