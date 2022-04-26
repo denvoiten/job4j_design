@@ -44,20 +44,18 @@ public class Finder {
     private static Predicate<Path> getCondition(ArgsName argsName) {
         String searchType = argsName.get("t");
         String fileName = argsName.get("n");
-        Predicate<Path> condition;
+        Predicate<Path> condition = null;
         Pattern pattern;
         if ("name".equals(searchType)) {
             condition = path -> path.toFile().getName().equals(fileName);
         } else if ("mask".equals(searchType)) {
-            String mask = fileName.replaceAll("\\*", ".*");
-            mask = mask.replaceAll("\\?", ".?");
+            String mask = fileName.replaceAll("\\*", "\\.*");
+            mask = mask.replaceAll("\\?", "\\.?");
             pattern = Pattern.compile(mask);
             condition = path -> path.toFile().getName().matches(pattern.toString());
         } else if ("regex".equals(searchType)) {
             pattern = Pattern.compile(fileName);
             condition = path -> path.toFile().getName().matches(pattern.toString());
-        } else {
-            throw new IllegalArgumentException(argsName.message);
         }
         return condition;
     }
