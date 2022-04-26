@@ -49,8 +49,9 @@ public class Finder {
         if ("name".equals(searchType)) {
             condition = path -> path.toFile().getName().equals(fileName);
         } else if ("mask".equals(searchType)) {
-            String mask = fileName.replaceAll("\\*", "\\.*");
-            mask = mask.replaceAll("\\?", "\\.?");
+            String mask = fileName.replaceAll("[.]", "\\\\.");
+            mask = mask.replaceAll("\\*", ".*");
+            mask = mask.replaceAll("\\?", ".?");
             pattern = Pattern.compile(mask);
             condition = path -> path.toFile().getName().matches(pattern.toString());
         } else if ("regex".equals(searchType)) {
