@@ -2,6 +2,11 @@ package ru.job4j.serialization.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -44,6 +49,24 @@ public class Main {
         final Employee empMod = gson.fromJson(employeeJson, Employee.class);
         System.out.println(personMod);
         System.out.println(empMod);
+
+        JSONObject jsonBoss = new JSONObject("{\"phoneNumber\":\"+7(924)111-111-11-11\", \"name\":\"Denis\"}");
+
+        List<String> list = new ArrayList<>();
+        list.add("male");
+        list.add("developer");
+        JSONArray jsonInfo = new JSONArray(list);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", employee.getName());
+        jsonObject.put("available", employee.isAvailable());
+        jsonObject.put("yearsOfExperience", employee.getYearsOfExperience());
+        jsonObject.put("boss", jsonBoss);
+        jsonObject.put("info", jsonInfo);
+
+        System.out.println(jsonObject);
+
+        System.out.println(new JSONObject(employee));
     }
 }
 
