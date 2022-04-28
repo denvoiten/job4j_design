@@ -11,7 +11,6 @@ create table players(
 
 insert into team(name) values('Liverpool');
 insert into players(name, team_id) values('Fabinho', 1);
-insert into players(name, team_id) values('Mane', 2);
+insert into players(name, team_id) values('Mane', 1);
 
-select * from players;
 

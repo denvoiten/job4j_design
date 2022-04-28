@@ -6,8 +6,8 @@ create table passport(
 
 create table people(
     id serial primary key,
-    name varchar(255)
-    passport_id int references passport(id) unique,
+    name varchar(255),
+    passport_id int references passport(id) unique
 );
 
 insert into  passport(seria, number) values(8822, 8313499);
