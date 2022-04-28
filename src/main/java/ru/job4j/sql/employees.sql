@@ -6,7 +6,7 @@ available boolean
 );
 
 insert into employees(name, yearsOfExp, available) values('Bob', '7', 'false');
-select * from cars;
+select * from employees;
 update employees set name = 'Boby';
-select * from cars;
+select * from employees;
 delete from employees;
