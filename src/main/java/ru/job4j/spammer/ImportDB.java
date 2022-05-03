@@ -27,7 +27,7 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(line -> {
                 String[] args = line.split(";");
-                if (args[0].isEmpty() || args[1].isEmpty() || args.length != 2) {
+                if (args.length != 2 || args[0].isEmpty() || args[1].isEmpty()) {
                     throw new IllegalArgumentException("Pattern violation");
                 }
                 users.add(new User(args[0], args[1]));
