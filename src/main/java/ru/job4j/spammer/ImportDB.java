@@ -27,7 +27,7 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(line -> {
                 String[] args = line.split(";");
-                if (args[0].isEmpty() || args[1].isEmpty()) {
+                if (args[0].isEmpty() || args[1].isEmpty() || args.length != 2) {
                     throw new IllegalArgumentException("Pattern violation");
                 }
                 users.add(new User(args[0], args[1]));
@@ -45,12 +45,9 @@ public class ImportDB {
         )) {
             for (User user : users) {
                 try (PreparedStatement ps = cnt.prepareStatement(
-                        "INSERT INTO users(name, email) SELECT ?, ? "
-                                + "WHERE "
-                                + "NOT EXISTS (SELECT name FROM users WHERE name = ?);")) {
+                        "INSERT INTO users(name, email) values(?, ?);")) {
                     ps.setString(1, user.name);
                     ps.setString(2, user.email);
-                    ps.setString(3, user.name);
                     ps.execute();
                 }
             }
