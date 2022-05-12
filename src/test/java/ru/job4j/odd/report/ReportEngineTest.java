@@ -62,7 +62,7 @@ public class ReportEngineTest {
                 .append(worker.getName()).append(";")
                 .append(worker.getHired()).append(";")
                 .append(worker.getFired()).append(";")
-                .append(worker.getSalary() / 68.84).append("$").append(";")
+                .append(worker.getSalary() / ReportForAccounting.EXCHANGE_RATE).append("$").append(";")
                 .append(ls);
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
