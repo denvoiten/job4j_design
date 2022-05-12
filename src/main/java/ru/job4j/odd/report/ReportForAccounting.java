@@ -1,12 +1,11 @@
-package ru.job4j.odd.srp.report;
+package ru.job4j.odd.report;
 
 import java.util.function.Predicate;
 
-public class ReportEngine implements Report {
-
+public class ReportForAccounting implements Report {
     private Store store;
 
-    public ReportEngine(Store store) {
+    public ReportForAccounting(Store store) {
         this.store = store;
     }
 
@@ -18,7 +17,7 @@ public class ReportEngine implements Report {
             text.append(employee.getName()).append(";")
                     .append(employee.getHired()).append(";")
                     .append(employee.getFired()).append(";")
-                    .append(employee.getSalary()).append(";")
+                    .append(employee.getSalary() / 68.84).append("$").append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();

@@ -1,4 +1,4 @@
-package ru.job4j.odd.srp.report;
+package ru.job4j.odd.report;
 
 import java.util.Calendar;
 import java.util.Objects;
