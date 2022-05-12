@@ -1,8 +1,12 @@
 package ru.job4j.odd.report;
 
+import com.google.gson.GsonBuilder;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+import java.util.StringJoiner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -87,6 +91,45 @@ public class ReportEngineTest {
                 .append(worker.getName()).append(";")
                 .append(worker.getSalary()).append(";")
                 .append(ls);
+        assertThat(engine.generate(em -> true), is(expect.toString()));
+    }
+
+    @Test
+    public void whenJSONGenerated() {
+        Employee worker = new Employee("Ivan", now, now, 100);
+        Employee worker2 = new Employee("Sergey", now, now, 1000);
+        store.add(worker);
+        store.add(worker2);
+        Report engine = new ReportJSON(store);
+        String expect = new GsonBuilder().create().toJson(List.of(worker, worker2));
+        assertThat(engine.generate(em -> true), is(expect));
+    }
+
+    @Test
+    public void whenXMLGenerated() {
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        String dateToString = date.format(now.getTime());
+        Employee worker = new Employee("Ivan", now, now, 100);
+        Employee worker2 = new Employee("Sergey", now, now, 1000);
+        store.add(worker);
+        store.add(worker2);
+        Report engine = new ReportXML(store);
+        StringJoiner expect = new StringJoiner("\n");
+        expect.add("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>")
+                .add("<Employees>")
+                .add("    <employee>")
+                .add(String.format("        <fired>%s</fired>", dateToString))
+                .add(String.format("        <hired>%s</hired>", dateToString))
+                .add("        <name>Ivan</name>")
+                .add("        <salary>100.0</salary>")
+                .add("    </employee>")
+                .add("    <employee>")
+                .add(String.format("        <fired>%s</fired>", dateToString))
+                .add(String.format("        <hired>%s</hired>", dateToString))
+                .add("        <name>Sergey</name>")
+                .add("        <salary>1000.0</salary>")
+                .add("    </employee>")
+                .add("</Employees>\n");
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 }
