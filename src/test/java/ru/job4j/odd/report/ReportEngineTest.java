@@ -1,11 +1,9 @@
 package ru.job4j.odd.report;
 
-import com.google.gson.GsonBuilder;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.StringJoiner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -97,11 +95,23 @@ public class ReportEngineTest {
     @Test
     public void whenJSONGenerated() {
         Employee worker = new Employee("Ivan", now, now, 100);
-        Employee worker2 = new Employee("Sergey", now, now, 1000);
         store.add(worker);
-        store.add(worker2);
         Report engine = new ReportJSON(store);
-        String expect = new GsonBuilder().create().toJson(List.of(worker, worker2));
+        String expect = "[{\"name\":\"" + worker.getName()
+                + "\",\"hired\":{\"year\":" + now.get(Calendar.YEAR)
+                + ",\"month\":" + now.get(Calendar.MONTH)
+                + ",\"dayOfMonth\":" + now.get(Calendar.DAY_OF_MONTH)
+                + ",\"hourOfDay\":" + now.get(Calendar.HOUR_OF_DAY)
+                + ",\"minute\":" + now.get(Calendar.MINUTE)
+                + ",\"second\":" + now.get(Calendar.SECOND)
+                + "},\"fired\":{\"year\":" + now.get(Calendar.YEAR)
+                + ",\"month\":" + now.get(Calendar.MONTH)
+                + ",\"dayOfMonth\":" + now.get(Calendar.DAY_OF_MONTH)
+                + ",\"hourOfDay\":" + now.get(Calendar.HOUR_OF_DAY)
+                + ",\"minute\":" + now.get(Calendar.MINUTE)
+                + ",\"second\":" + now.get(Calendar.SECOND)
+                + "},\"salary\":" + worker.getSalary() + "}]";
+        System.out.println(expect);
         assertThat(engine.generate(em -> true), is(expect));
     }
 
