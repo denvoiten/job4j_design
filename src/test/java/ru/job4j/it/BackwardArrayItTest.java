@@ -5,7 +5,8 @@ import org.junit.Test;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class BackwardArrayItTest {
 
@@ -14,8 +15,8 @@ public class BackwardArrayItTest {
         BackwardArrayIt it = new BackwardArrayIt(
                 new int[]{1, 2, 3}
         );
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
+        assertTrue(it.hasNext());
+        assertTrue(it.hasNext());
     }
 
     @Test
