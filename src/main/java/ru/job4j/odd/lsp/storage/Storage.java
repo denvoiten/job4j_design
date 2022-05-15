@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface Storage {
 
+    boolean accept(Food food);
+
     boolean add(Food food);
 
-    List<Food> toList();
+    List<Food> getFoodList();
 
     default double getFreshness(Food food) {
         return (double) ChronoUnit.DAYS.between(food.getCreateDate(), LocalDate.now())

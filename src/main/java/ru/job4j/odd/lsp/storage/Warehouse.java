@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Warehouse implements Storage {
-    List<Food> foodList = new ArrayList<>();
+    private final List<Food> foodList = new ArrayList<>();
+
+    @Override
+    public boolean accept(Food food) {
+        return getFreshness(food) < 25;
+    }
 
     @Override
     public boolean add(Food food) {
         boolean rsl = false;
-        if (getFreshness(food) < 25) {
+        if (accept(food)) {
             foodList.add(food);
             rsl = true;
         }
@@ -17,7 +22,7 @@ public class Warehouse implements Storage {
     }
 
     @Override
-    public List<Food> toList() {
-        return foodList;
+    public List<Food> getFoodList() {
+        return List.copyOf(foodList);
     }
 }

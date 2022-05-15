@@ -6,7 +6,8 @@ public class ControlQuality {
     public void distribution(List<Food> foodList, List<Storage> storageList) {
         for (Food food : foodList) {
             for (Storage storage : storageList) {
-                if (storage.add(food)) {
+                if (storage.accept(food)) {
+                    storage.add(food);
                     break;
                 }
             }

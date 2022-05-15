@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Shop implements Storage {
-    List<Food> foodList = new ArrayList<>();
+    private final List<Food> foodList = new ArrayList<>();
+
+    @Override
+    public boolean accept(Food food) {
+        return getFreshness(food) >= 25 && getFreshness(food) < 100;
+    }
 
     @Override
     public boolean add(Food food) {
         boolean rsl = false;
-        double freshness = getFreshness(food);
-        if (freshness >= 25 && freshness < 100) {
-            if (freshness > 75) {
+        if (accept(food)) {
+            if (getFreshness(food) > 75) {
                 food.setPrice(food.getDiscount());
             }
             foodList.add(food);
@@ -21,8 +25,7 @@ public class Shop implements Storage {
     }
 
     @Override
-    public List<Food> toList() {
-        return foodList;
+    public List<Food> getFoodList() {
+        return List.copyOf(foodList);
     }
-
 }

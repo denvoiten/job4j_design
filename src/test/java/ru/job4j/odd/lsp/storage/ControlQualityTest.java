@@ -24,12 +24,12 @@ public class ControlQualityTest {
         Food fish = new Food("Рыба", date.minusDays(12), date.minusDays(30), 300, 150);
         List<Food> foodList = List.of(fish, milk, chocolate, bread, tomatoes);
         controlQuality.distribution(foodList, stores);
-        assertEquals(2, warehouse.toList().size());
-        assertEquals(2, shop.toList().size());
-        assertEquals(1, trash.toList().size());
-        assertFalse(warehouse.toList().contains(fish));
-        assertFalse(shop.toList().contains(fish));
-        assertTrue(trash.toList().contains(fish));
+        assertEquals(2, warehouse.getFoodList().size());
+        assertEquals(2, shop.getFoodList().size());
+        assertEquals(1, trash.getFoodList().size());
+        assertFalse(warehouse.getFoodList().contains(fish));
+        assertFalse(shop.getFoodList().contains(fish));
+        assertTrue(trash.getFoodList().contains(fish));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class ControlQualityTest {
         Food chocolate = new Food("Шоколад", date.plusDays(5), date.minusDays(22), 46.99, 35.99);
         List<Food> foodList = List.of(chocolate);
         controlQuality.distribution(foodList, stores);
-        assertTrue(shop.toList().contains(chocolate));
+        assertTrue(shop.getFoodList().contains(chocolate));
         assertEquals(chocolate.getPrice(), chocolate.getDiscount(), 2);
     }
 
@@ -50,6 +50,6 @@ public class ControlQualityTest {
         Food fish = new Food("Рыба", date.minusDays(2), date.minusDays(30), 300, 150);
         List<Food> foodList = List.of(fish, milk, chocolate, bread, tomatoes);
         controlQuality.distribution(foodList, stores);
-        assertEquals(5, trash.toList().size());
+        assertEquals(5, trash.getFoodList().size());
     }
 }
