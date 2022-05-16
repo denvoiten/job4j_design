@@ -12,6 +12,8 @@ public interface Storage {
 
     List<Food> getFoodList();
 
+    void removeAll();
+
     default double getFreshness(Food food) {
         return (double) ChronoUnit.DAYS.between(food.getCreateDate(), LocalDate.now())
                 / ChronoUnit.DAYS.between(food.getCreateDate(), food.getExpiryDate()) * 100;

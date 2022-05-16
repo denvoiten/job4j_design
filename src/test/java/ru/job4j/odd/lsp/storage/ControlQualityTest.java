@@ -52,4 +52,28 @@ public class ControlQualityTest {
         controlQuality.distribution(foodList, stores);
         assertEquals(5, trash.getFoodList().size());
     }
+
+    @Test
+    public void whenResort() {
+        Food milk = new Food("Молоко", date.plusDays(3), date.minusDays(2), 86.99, 55);
+        Food chocolate = new Food("Шоколад", date.plusDays(25), date.minusDays(5), 46.99, 35.99);
+        Food bread = new Food("Хлеб", date.plusDays(4), date.minusDays(2), 80.99, 40);
+        Food tomatoes = new Food("Томаты", date.plusDays(14), date.minusDays(1), 178.99, 128);
+        Food fish = new Food("Рыба", date.minusDays(12), date.minusDays(30), 300, 150);
+        List<Food> foodList = List.of(fish, milk, chocolate, bread, tomatoes);
+        controlQuality.distribution(foodList, stores);
+        assertEquals(2, warehouse.getFoodList().size());
+        assertEquals(2, shop.getFoodList().size());
+        assertEquals(1, trash.getFoodList().size());
+        assertTrue(warehouse.getFoodList().contains(tomatoes));
+        milk.setExpiryDate(date.minusDays(2));
+        chocolate.setExpiryDate(date.plusDays(2));
+        bread.setExpiryDate(date.minusDays(2));
+        tomatoes.setExpiryDate(date.plusDays(1));
+        controlQuality.resort(List.of(warehouse, shop, trash));
+        assertFalse(warehouse.getFoodList().contains(tomatoes));
+        assertEquals(0, warehouse.getFoodList().size());
+        assertEquals(2, shop.getFoodList().size());
+        assertEquals(3, trash.getFoodList().size());
+    }
 }
