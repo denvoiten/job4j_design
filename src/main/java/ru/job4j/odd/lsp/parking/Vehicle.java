@@ -1,13 +1,13 @@
 package ru.job4j.odd.lsp.parking;
 
-public class Vehicle {
+public abstract class Vehicle {
     private int size;
 
-    public Vehicle(int size) {
+    protected Vehicle(int size) {
         this.size = size;
     }
 
-    public Vehicle() {
+    protected Vehicle() {
     }
 
     public int getSize() {
