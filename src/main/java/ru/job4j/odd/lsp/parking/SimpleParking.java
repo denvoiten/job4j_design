@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleParking implements Parking {
-    private List<Car> cars;
-    private List<Truck> trucks;
+    private final List<Car> cars;
+    private final List<Truck> trucks;
     private int freeCarPlaces;
     private int freeTruckPlaces;
 
@@ -18,6 +18,23 @@ public class SimpleParking implements Parking {
 
     @Override
     public boolean park(Vehicle vehicle) {
-        return false;
+        boolean rsl = false;
+        int size = vehicle.getSize();
+        if (size > 1 && freeTruckPlaces >= 1) {
+            trucks.add((Truck) vehicle);
+            freeTruckPlaces--;
+            rsl = true;
+        } else if (size > 1 && freeTruckPlaces == 0) {
+            if (size <= freeCarPlaces) {
+                trucks.add((Truck) vehicle);
+                freeCarPlaces -= size;
+                rsl = true;
+            }
+        } else if (size == 1 && freeCarPlaces >= size) {
+            cars.add((Car) vehicle);
+            freeCarPlaces--;
+            rsl = true;
+        }
+        return rsl;
     }
 }
