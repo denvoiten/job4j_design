@@ -1,5 +1,6 @@
 package ru.job4j.odd.lsp.parking;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
@@ -7,13 +8,14 @@ import static org.junit.Assert.assertTrue;
 
 public class SimpleParkingTest {
 
+    @Ignore
     @Test
     public void whenCarAndPlacesAvailableThenPark() {
         Car car = new Car();
         Parking simpleParking = new SimpleParking(1, 0);
         assertTrue(simpleParking.park(car));
     }
-
+    @Ignore
     @Test
     public void whenTruckAndPlacesAvailableThenPark() {
         Truck truck = new Truck(3);
@@ -21,6 +23,7 @@ public class SimpleParkingTest {
         assertTrue(simpleParking.park(truck));
     }
 
+    @Ignore
     @Test
     public void whenTruckAndPlacesNotAvailableThenNotPark() {
         Truck truck = new Truck(2);
@@ -28,6 +31,7 @@ public class SimpleParkingTest {
         assertFalse(simpleParking.park(truck));
     }
 
+    @Ignore
     @Test
     public void whenCarAndPlacesNotAvailableThenNotPark() {
         Car car = new Car();
@@ -35,6 +39,7 @@ public class SimpleParkingTest {
         assertFalse(simpleParking.park(car));
     }
 
+    @Ignore
     @Test
     public void whenTwoCarsOneTruckAndPlacesAvailableThenPark() {
         Car car = new Car();
@@ -46,6 +51,7 @@ public class SimpleParkingTest {
         assertTrue(simpleParking.park(truck));
     }
 
+    @Ignore
     @Test
     public void whenTwoCarsAndPlacesNotAvailableThenNotPark() {
         Car car = new Car();
