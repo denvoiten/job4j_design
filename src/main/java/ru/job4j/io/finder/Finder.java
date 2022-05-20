@@ -31,7 +31,7 @@ public class Finder {
 
     private static void writeFile(String outFile, List<Path> paths) throws IOException {
         try (PrintWriter writer = new PrintWriter(new BufferedOutputStream(new FileOutputStream(outFile)))) {
-            paths.forEach(el -> writer.write(el.toString() + System.lineSeparator()));
+            paths.forEach(writer::println);
         }
     }
 
